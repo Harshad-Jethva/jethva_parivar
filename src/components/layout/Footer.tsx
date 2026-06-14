@@ -16,9 +16,14 @@ import {
 import { useLanguage } from '../../contexts/LanguageContext';
 import { supabase } from '../../lib/supabase';
 
+const cleanAssetUrl = (url: string): string => {
+  if (!url) return '';
+  return url.replace(/^\/?src\/assests\//, '/assets/').replace(/^\/?assests\//, '/assets/');
+};
+
 export function Footer() {
   const { t, language } = useLanguage();
-  const [logoJethva, setLogoJethva] = useState('/src/assests/logo/logo_jethva.png');
+  const [logoJethva, setLogoJethva] = useState('/assets/logo/logo_jethva.png');
   const [phone, setPhone] = useState('+91 98765 43210');
   const [email, setEmail] = useState('info@khambhadiyadhaam.com');
   const [address, setAddress] = useState('123 Temple Street, Ahmedabad, Gujarat 380001');
@@ -55,7 +60,7 @@ export function Footer() {
 
       if (settingsRes.data) {
         settingsRes.data.forEach((item: any) => {
-          if (item.key === 'logo_jethva') setLogoJethva(item.value);
+          if (item.key === 'logo_jethva') setLogoJethva(cleanAssetUrl(item.value));
           if (item.key === 'phone') setPhone(item.value);
           if (item.key === 'email') setEmail(item.value);
           if (item.key === 'address') setAddress(item.value);

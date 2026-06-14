@@ -19,6 +19,11 @@ import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 
 import { supabase } from '../../lib/supabase';
 
+const cleanAssetUrl = (url: string): string => {
+  if (!url) return '';
+  return url.replace(/^\/?src\/assests\//, '/assets/').replace(/^\/?assests\//, '/assets/');
+};
+
 export function Header() {
   const { t, language } = useLanguage();
   const { isDark, toggleTheme, festivalMode } = useTheme();
@@ -28,7 +33,7 @@ export function Header() {
   const location = useLocation();
 
   const [navLinks, setNavLinks] = useState<any[]>([]);
-  const [logoUrl, setLogoUrl] = useState('/src/assests/logo/logo_header.png');
+  const [logoUrl, setLogoUrl] = useState('/assets/logo/logo_header.png');
   const [phone, setPhone] = useState('+91 98765 43210');
   const [email, setEmail] = useState('info@khambhadiyadhaam.com');
   const [themeColor, setThemeColor] = useState('#FF6B00');
@@ -117,7 +122,7 @@ export function Header() {
         let emergency = false;
 
         settingsRes.data.forEach((item: any) => {
-          if (item.key === 'logo_header') setLogoUrl(item.value);
+          if (item.key === 'logo_header') setLogoUrl(cleanAssetUrl(item.value));
           if (item.key === 'phone') setPhone(item.value);
           if (item.key === 'email') setEmail(item.value);
           if (item.key === 'theme_color') setThemeColor(item.value);
@@ -286,7 +291,7 @@ export function Header() {
             </div>
             <div className="hidden sm:block">
               <img
-                src="/src/assests/logo/name_and_tagline.png"
+                src="/assets/logo/name_and_tagline.png"
                 alt="KHAMBHADIYA DHAM"
                 className={`transition-all duration-300 ${isScrolled ? 'h-14 sm:h-16' : 'h-20 sm:h-24'} object-contain dark:brightness-110`}
               />

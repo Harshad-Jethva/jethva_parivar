@@ -58,8 +58,8 @@ export function AdminLayout() {
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-12 h-12 flex items-center justify-center">
-              <img 
-                src="/src/assests/logo/logo_jethva.png" 
+               <img 
+                src="/assets/logo/logo_jethva.png" 
                 alt="Logo" 
                 className="w-full h-full object-contain"
               />

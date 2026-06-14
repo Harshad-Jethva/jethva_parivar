@@ -2,10 +2,15 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Save, Image as ImageIcon, Sliders, Palette, Type, Check, Megaphone } from 'lucide-react';
 
+const cleanAssetUrl = (url: string): string => {
+  if (!url) return '';
+  return url.replace(/^\/?src\/assests\//, '/assets/').replace(/^\/?assests\//, '/assets/');
+};
+
 export function ThemeCustomizer() {
   const [accentColor, setAccentColor] = useState('#FF6B00');
-  const [logoUrl, setLogoUrl] = useState('/src/assests/logo/logo_header.png');
-  const [logoJethva, setLogoJethva] = useState('/src/assests/logo/logo_jethva.png');
+  const [logoUrl, setLogoUrl] = useState('/assets/logo/logo_header.png');
+  const [logoJethva, setLogoJethva] = useState('/assets/logo/logo_jethva.png');
   const [favicon, setFavicon] = useState('/favicon_jethva.png');
   const [fontFamily, setFontFamily] = useState('Inter');
   const [announcementEnabled, setAnnouncementEnabled] = useState(false);
@@ -30,8 +35,8 @@ export function ThemeCustomizer() {
       });
 
       if (parsed['theme_color']) setAccentColor(parsed['theme_color']);
-      if (parsed['logo_header']) setLogoUrl(parsed['logo_header']);
-      if (parsed['logo_jethva']) setLogoJethva(parsed['logo_jethva']);
+      if (parsed['logo_header']) setLogoUrl(cleanAssetUrl(parsed['logo_header']));
+      if (parsed['logo_jethva']) setLogoJethva(cleanAssetUrl(parsed['logo_jethva']));
       if (parsed['favicon']) setFavicon(parsed['favicon']);
       if (parsed['font_family']) setFontFamily(parsed['font_family']);
       if (parsed['announcement_enabled']) setAnnouncementEnabled(parsed['announcement_enabled'] === 'true');
@@ -310,7 +315,7 @@ export function ThemeCustomizer() {
               
               {/* Logo Preview */}
               <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-200/50 flex items-center gap-3">
-                <img src={logoJethva} alt="Logo" className="w-10 h-10 object-contain" onError={(e) => { e.currentTarget.src = "/src/assests/logo/logo_header.png" }} />
+                <img src={logoJethva} alt="Logo" className="w-10 h-10 object-contain" onError={(e) => { e.currentTarget.src = "/assets/logo/logo_header.png" }} />
                 <div>
                   <span className="text-xs font-bold text-gray-800 dark:text-white block">KHBHADIYA DHAAM</span>
                   <span className="text-[10px] text-gray-400 block">Jethva Family Mandir</span>
